@@ -1,5 +1,6 @@
 package com.ee.asap.domain.model;
 
+import com.ee.asap.domain.constants.enums.TimeUnit;
 import lombok.AllArgsConstructor;
 
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package com.ee.asap.domain.model;
+package com.ee.asap.domain.constants.enums;
 
 public class Currency {
     public static final Currency RUPEE = new Currency("Rupees");

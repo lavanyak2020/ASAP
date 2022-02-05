@@ -1,4 +1,4 @@
-package com.ee.asap.domain.model;
+package com.ee.asap.domain.constants.enums;
 
 public class DistanceUnit {
     public static final DistanceUnit KM = new DistanceUnit("km");

@@ -1,7 +1,6 @@
 package com.ee.asap.domain.model;
 
-import com.ee.asap.domain.model.Distance;
-import com.ee.asap.domain.model.DistanceUnit;
+import com.ee.asap.domain.constants.enums.DistanceUnit;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 

@@ -1,5 +1,6 @@
 package com.ee.asap.domain.model;
 
+import com.ee.asap.domain.constants.enums.Currency;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

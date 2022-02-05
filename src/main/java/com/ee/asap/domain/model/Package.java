@@ -1,5 +1,6 @@
 package com.ee.asap.domain.model;
 
+import com.ee.asap.domain.constants.enums.Currency;
 import com.ee.asap.domain.model.criteria.DistanceAndWeightCriteriaInput;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

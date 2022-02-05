@@ -1,5 +1,6 @@
 package com.ee.asap.domain.model;
 
+import com.ee.asap.domain.constants.enums.WeightUnit;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

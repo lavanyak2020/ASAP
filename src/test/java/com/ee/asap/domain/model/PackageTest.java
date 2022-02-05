@@ -1,5 +1,8 @@
 package com.ee.asap.domain.model;
 
+import com.ee.asap.domain.constants.enums.Currency;
+import com.ee.asap.domain.constants.enums.DistanceUnit;
+import com.ee.asap.domain.constants.enums.WeightUnit;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 

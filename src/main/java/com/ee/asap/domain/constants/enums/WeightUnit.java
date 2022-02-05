@@ -1,4 +1,4 @@
-package com.ee.asap.domain.model;
+package com.ee.asap.domain.constants.enums;
 
 public class WeightUnit {
     public static final WeightUnit KG = new WeightUnit("kg");

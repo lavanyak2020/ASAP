@@ -1,11 +1,9 @@
 package com.ee.asap.domain.model;
 
+import com.ee.asap.domain.constants.enums.WeightUnit;
 import com.ee.asap.domain.model.criteria.DistanceAndWeightCriteria;
 import com.ee.asap.domain.model.criteria.DistanceAndWeightCriteriaInput;
-import com.ee.asap.domain.model.Distance;
-import com.ee.asap.domain.model.DistanceUnit;
-import com.ee.asap.domain.model.Weight;
-import com.ee.asap.domain.model.WeightUnit;
+import com.ee.asap.domain.constants.enums.DistanceUnit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
