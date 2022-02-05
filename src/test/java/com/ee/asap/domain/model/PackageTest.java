@@ -20,7 +20,7 @@ class PackageTest {
         when(offer.isApplicableFor(Mockito.any())).thenReturn(false);
         Weight packageWeight = new Weight(10, WeightUnit.KG);
         Distance distanceToDestination = new Distance(50, DistanceUnit.KM);
-        Package receivedPackage = new Package(packageWeight, distanceToDestination, offer);
+        Package receivedPackage = new Package("PKG1", packageWeight, distanceToDestination, offer);
 
         receivedPackage.calculateTotalCostWith(new Cost(100, Currency.RUPEE));
 
@@ -35,7 +35,7 @@ class PackageTest {
         when(offer.getDiscountPercentage()).thenReturn(Double.valueOf(5));
         Weight packageWeight = new Weight(10, WeightUnit.KG);
         Distance distanceToDestination = new Distance(50, DistanceUnit.KM);
-        Package receivedPackage = new Package(packageWeight, distanceToDestination, offer);
+        Package receivedPackage = new Package("PKG1", packageWeight, distanceToDestination, offer);
 
         receivedPackage.calculateTotalCostWith(new Cost(100, Currency.RUPEE));
 

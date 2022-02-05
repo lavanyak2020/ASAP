@@ -38,7 +38,7 @@ class PackageServiceTest {
     @Test
     void shouldReturnPackageDomainObjectWithCost() throws OfferNotFoundException {
         String offerId = "offer-id";
-        PackageDto aPackage = new PackageDto(new Weight(10, WeightUnit.KG), new Distance(50, DistanceUnit.KM), offerId);
+        PackageDto aPackage = new PackageDto("PKG1", new Weight(10, WeightUnit.KG), new Distance(50, DistanceUnit.KM), offerId);
         DistanceAndWeightCriteria criteria = DistanceAndWeightCriteria.builder()
                                                                       .minDistance(new Distance(1, DistanceUnit.KM))
                                                                       .maxDistance(new Distance(199, DistanceUnit.KM))
@@ -58,7 +58,7 @@ class PackageServiceTest {
     @Test
     void shouldThrowExceptionIfOfferNotFound() throws OfferNotFoundException {
         String offerId = "offer-id";
-        PackageDto aPackage = new PackageDto(new Weight(10, WeightUnit.KG), new Distance(50, DistanceUnit.KM), offerId);
+        PackageDto aPackage = new PackageDto("PKG1", new Weight(10, WeightUnit.KG), new Distance(50, DistanceUnit.KM), offerId);
         when(offerService.getById(offerId)).thenThrow(new OfferNotFoundException("Offer not found"));
 
         assertThrows(OfferNotFoundException.class, () -> packageService.addPackage(aPackage));

@@ -8,6 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class PackageDto {
+    private final String id;
     private final Weight weight;
     private final Distance distanceToDestination;
     private final String offerId;

@@ -33,7 +33,7 @@ class ASAPIntegrationTest {
     @Test
     void shouldReturnDiscount0IfAppliedOfferIsInvalid() throws OfferNotFoundException {
         String invalidOfferId = "OFR001";
-        PackageDto packageDto = new PackageDto(new Weight(5, WeightUnit.KG), new Distance(5, DistanceUnit.KM), invalidOfferId);
+        PackageDto packageDto = new PackageDto("PKG1", new Weight(5, WeightUnit.KG), new Distance(5, DistanceUnit.KM), invalidOfferId);
 
         Package aPackage = packageService.addPackage(packageDto);
 
@@ -46,7 +46,7 @@ class ASAPIntegrationTest {
     @Test
     void shouldTotalCostBe275() throws OfferNotFoundException {
         String invalidOfferId = "OFR002";
-        PackageDto packageDto = new PackageDto(new Weight(15, WeightUnit.KG), new Distance(5, DistanceUnit.KM), invalidOfferId);
+        PackageDto packageDto = new PackageDto("PKG1", new Weight(15, WeightUnit.KG), new Distance(5, DistanceUnit.KM), invalidOfferId);
 
         Package aPackage = packageService.addPackage(packageDto);
 
@@ -59,7 +59,7 @@ class ASAPIntegrationTest {
     @Test
     void shouldTotalCostBe665AndDiscountBe35() throws OfferNotFoundException {
         String offer3 = "OFR003";
-        PackageDto packageDto = new PackageDto(new Weight(10, WeightUnit.KG), new Distance(100, DistanceUnit.KM), offer3);
+        PackageDto packageDto = new PackageDto("PKG1", new Weight(10, WeightUnit.KG), new Distance(100, DistanceUnit.KM), offer3);
 
         Package aPackage = packageService.addPackage(packageDto);
 

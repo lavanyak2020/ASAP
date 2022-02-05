@@ -27,6 +27,6 @@ public class PackageService {
 
     private Package toDomainEntity(PackageDto receivedPackage) throws OfferNotFoundException {
         Offer offer = offerService.getById(receivedPackage.getOfferId());
-        return new Package(receivedPackage.getWeight(), receivedPackage.getDistanceToDestination(), offer);
+        return new Package("PKG_1", receivedPackage.getWeight(), receivedPackage.getDistanceToDestination(), offer);
     }
 }

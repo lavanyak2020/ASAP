@@ -11,6 +11,7 @@ import static com.ee.asap.domain.constants.CostConstants.WEIGHT_COST_FACTOR;
 @RequiredArgsConstructor
 @Getter
 public class Package {
+    private final String id;
     private final Weight weight;
     private final Distance distanceToDestination;
     private final Offer appliedOffer;
