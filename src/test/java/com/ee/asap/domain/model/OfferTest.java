@@ -1,4 +1,4 @@
-package com.ee.asap.domain;
+package com.ee.asap.domain.model;
 
 import com.ee.asap.domain.model.criteria.DistanceAndWeightCriteria;
 import com.ee.asap.domain.model.criteria.DistanceAndWeightCriteriaInput;
@@ -29,7 +29,7 @@ class OfferTest {
     public void setUp() {
         criteria = mock(DistanceAndWeightCriteria.class);
         offer = Offer.builder().id("OFFER_1")
-                     .discountPercentage(10f)
+                     .discountPercentage(10)
                      .criteria(criteria)
                      .build();
     }
@@ -55,11 +55,11 @@ class OfferTest {
     @Test
     void shouldEquateTwoSameOffersByCriteriaAndDiscount() {
         Offer offer1 = Offer.builder().id("OFFER_1")
-                             .discountPercentage(10f)
+                             .discountPercentage(10)
                              .criteria(criteria)
                              .build();
         Offer offer2 = Offer.builder().id("OFFER_2")
-                            .discountPercentage(10f)
+                            .discountPercentage(10)
                             .criteria(criteria)
                             .build();
 

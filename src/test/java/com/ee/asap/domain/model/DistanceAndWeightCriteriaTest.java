@@ -1,4 +1,4 @@
-package com.ee.asap.domain;
+package com.ee.asap.domain.model;
 
 import com.ee.asap.domain.model.criteria.DistanceAndWeightCriteria;
 import com.ee.asap.domain.model.criteria.DistanceAndWeightCriteriaInput;

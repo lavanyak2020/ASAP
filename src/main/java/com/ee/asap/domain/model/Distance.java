@@ -9,7 +9,7 @@ import java.util.Objects;
 @Getter
 public class Distance {
 
-    private final float value;
+    private final double value;
     private final DistanceUnit unit;
 
     public boolean isGreaterOrEqual(Distance that) {
@@ -25,7 +25,7 @@ public class Distance {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Distance distance = (Distance) o;
-        return Float.compare(distance.value, value) == 0 && Objects.equals(unit, distance.unit);
+        return Double.compare(distance.value, value) == 0 && Objects.equals(unit, distance.unit);
     }
 
     @Override

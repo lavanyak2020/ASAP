@@ -4,14 +4,16 @@ import com.ee.asap.domain.model.criteria.Criteria;
 import com.ee.asap.domain.model.criteria.CriteriaInput;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 
 import java.util.Objects;
 
 @Builder
 @AllArgsConstructor
+@Getter
 public class Offer {
     private String id;
-    private float discountPercentage;
+    private double discountPercentage;
     private Criteria criteria;
 
     public boolean isApplicableFor(CriteriaInput input) {
@@ -23,8 +25,7 @@ public class Offer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Offer offer = (Offer) o;
-        return Float.compare(offer.discountPercentage, discountPercentage) == 0
-                && criteria.equals(offer.criteria);
+        return Double.compare(offer.discountPercentage, discountPercentage) == 0 && Objects.equals(criteria, offer.criteria);
     }
 
     @Override

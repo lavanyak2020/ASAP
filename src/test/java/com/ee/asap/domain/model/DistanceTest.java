@@ -1,4 +1,4 @@
-package com.ee.asap.domain;
+package com.ee.asap.domain.model;
 
 import com.ee.asap.domain.model.Distance;
 import com.ee.asap.domain.model.DistanceUnit;
@@ -17,24 +17,24 @@ class DistanceTest {
 
         @Test
         void shouldReturnTrueIfDistance1IsGreaterThanDistance2() {
-            Distance distance1 = new Distance(20f, DistanceUnit.KM);
-            Distance distance2 = new Distance(10f, DistanceUnit.KM);
+            Distance distance1 = new Distance(20, DistanceUnit.KM);
+            Distance distance2 = new Distance(10, DistanceUnit.KM);
 
             assertTrue(distance1.isGreaterOrEqual(distance2));
         }
 
         @Test
         void shouldReturnTrueIfDistance1IsEqualToDistance2() {
-            Distance distance1 = new Distance(20f, DistanceUnit.KM);
-            Distance distance2 = new Distance(20f, DistanceUnit.KM);
+            Distance distance1 = new Distance(20, DistanceUnit.KM);
+            Distance distance2 = new Distance(20, DistanceUnit.KM);
 
             assertTrue(distance1.isGreaterOrEqual(distance2));
         }
 
         @Test
         void shouldReturnFalseIfDistance1IsNeitherGreaterNorEqualDistance2() {
-            Distance distance1 = new Distance(10f, DistanceUnit.KM);
-            Distance distance2 = new Distance(20f, DistanceUnit.KM);
+            Distance distance1 = new Distance(10, DistanceUnit.KM);
+            Distance distance2 = new Distance(20, DistanceUnit.KM);
 
             assertFalse(distance1.isGreaterOrEqual(distance2));
         }
@@ -45,24 +45,24 @@ class DistanceTest {
 
         @Test
         void shouldReturnTrueIfDistance1IsLessThanDistance2() {
-            Distance distance1 = new Distance(10f, DistanceUnit.KM);
-            Distance distance2 = new Distance(20f, DistanceUnit.KM);
+            Distance distance1 = new Distance(10, DistanceUnit.KM);
+            Distance distance2 = new Distance(20, DistanceUnit.KM);
 
             assertTrue(distance1.isLessOrEqual(distance2));
         }
 
         @Test
         void shouldReturnTrueIfDistance1IsEqualToDistance2() {
-            Distance distance1 = new Distance(10f, DistanceUnit.KM);
-            Distance distance2 = new Distance(10f, DistanceUnit.KM);
+            Distance distance1 = new Distance(10, DistanceUnit.KM);
+            Distance distance2 = new Distance(10, DistanceUnit.KM);
 
             assertTrue(distance1.isLessOrEqual(distance2));
         }
 
         @Test
         void shouldReturnFalseIfDistance1IsNeitherLessNorEqualDistance2() {
-            Distance distance1 = new Distance(20f, DistanceUnit.KM);
-            Distance distance2 = new Distance(10f, DistanceUnit.KM);
+            Distance distance1 = new Distance(20, DistanceUnit.KM);
+            Distance distance2 = new Distance(10, DistanceUnit.KM);
 
             assertFalse(distance1.isLessOrEqual(distance2));
         }
@@ -70,8 +70,8 @@ class DistanceTest {
 
     @Test
     void shouldEquateTwoSameDistanceByValueAndUnit() {
-        Distance distance1 = new Distance(10f, DistanceUnit.KM);
-        Distance distance2 = new Distance(10f, DistanceUnit.KM);
+        Distance distance1 = new Distance(10, DistanceUnit.KM);
+        Distance distance2 = new Distance(10, DistanceUnit.KM);
 
         assertThat(distance1, is(equalTo(distance2)));
     }

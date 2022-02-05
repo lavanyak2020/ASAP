@@ -9,7 +9,7 @@ import java.util.Objects;
 @Getter
 public class Weight {
 
-    private final float value;
+    private final double value;
     private final WeightUnit unit;
 
     public boolean isGreaterOrEqual(Weight that) {
@@ -25,7 +25,7 @@ public class Weight {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Weight weight = (Weight) o;
-        return Float.compare(weight.value, value) == 0 && unit.equals(weight.unit);
+        return Double.compare(weight.value, value) == 0 && Objects.equals(unit, weight.unit);
     }
 
     @Override

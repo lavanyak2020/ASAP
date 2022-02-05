@@ -1,14 +1,13 @@
-package com.ee.asap.domain;
+package com.ee.asap.domain.model;
 
-import com.ee.asap.domain.model.Weight;
-import com.ee.asap.domain.model.WeightUnit;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class WeightTest {
 
@@ -70,8 +69,8 @@ class WeightTest {
 
     @Test
     void shouldEquateTwoSameWeightByValueAndUnit() {
-        Weight weight1 = new Weight(10f, WeightUnit.KG);
-        Weight weight2 = new Weight(10f, WeightUnit.KG);
+        Weight weight1 = new Weight(10, WeightUnit.KG);
+        Weight weight2 = new Weight(10, WeightUnit.KG);
 
         assertThat(weight1, is(equalTo(weight2)));
     }
