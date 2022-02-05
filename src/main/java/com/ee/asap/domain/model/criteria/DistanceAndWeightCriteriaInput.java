@@ -1,7 +1,7 @@
-package com.ee.asap.domain.criteria;
+package com.ee.asap.domain.model.criteria;
 
-import com.ee.asap.domain.Distance;
-import com.ee.asap.domain.Weight;
+import com.ee.asap.domain.model.Distance;
+import com.ee.asap.domain.model.Weight;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

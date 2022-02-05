@@ -1,4 +1,4 @@
-package com.ee.asap.domain;
+package com.ee.asap.domain.model;
 
 public class WeightUnit {
     public static final WeightUnit KG = new WeightUnit("kg");

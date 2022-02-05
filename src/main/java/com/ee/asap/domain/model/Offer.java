@@ -1,7 +1,7 @@
-package com.ee.asap.domain;
+package com.ee.asap.domain.model;
 
-import com.ee.asap.domain.criteria.Criteria;
-import com.ee.asap.domain.criteria.CriteriaInput;
+import com.ee.asap.domain.model.criteria.Criteria;
+import com.ee.asap.domain.model.criteria.CriteriaInput;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 

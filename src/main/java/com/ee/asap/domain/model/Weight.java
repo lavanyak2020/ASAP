@@ -1,4 +1,4 @@
-package com.ee.asap.domain;
+package com.ee.asap.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
