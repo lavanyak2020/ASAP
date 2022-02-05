@@ -23,5 +23,13 @@ public class Time {
     public int hashCode() {
         return Objects.hash(value, unit);
     }
+
+    public boolean isOlderThanOrSame(Time that) {
+        return this.unit == that.unit && this.value <= that.value;
+    }
+
+    public Time plus(Time that) {
+        return new Time(this.value + that.value, TimeUnit.HOURS);
+    }
 }
 
