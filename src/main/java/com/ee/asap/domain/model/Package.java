@@ -14,20 +14,29 @@ public class Package {
     private final String id;
     private final Weight weight;
     private final Distance distanceToDestination;
-    private final Offer appliedOffer;
     private Cost totalCost;
     private Cost discount;
 
-    public void calculateTotalCostWith(Cost baseDeliveryCost) {
-        double value = baseDeliveryCost.getValue()
-                        + (weight.getValue() * WEIGHT_COST_FACTOR)
-                        + (distanceToDestination.getValue() * DISTANCE_COST_FACTOR);
-        Cost actualCost = new Cost(value, Currency.RUPEE);
-        calculateDiscount(actualCost);
+    public void calculateTotalCostWith(Cost baseDeliveryCost, Offer appliedOffer) {
+        Cost actualCost = actualCost(baseDeliveryCost);
+        calculateDiscount(actualCost, appliedOffer);
         totalCost = actualCost.minus(discount);
     }
 
-    private void calculateDiscount(Cost actualCost) {
+    public void calculateTotalCostWith(Cost baseDeliveryCost) {
+        Cost actualCost = actualCost(baseDeliveryCost);
+        discount = new Cost(0, Currency.RUPEE);
+        totalCost = actualCost.minus(discount);
+    }
+
+    private Cost actualCost(Cost baseDeliveryCost) {
+        double value = baseDeliveryCost.getValue()
+                + (weight.getValue() * WEIGHT_COST_FACTOR)
+                + (distanceToDestination.getValue() * DISTANCE_COST_FACTOR);
+        return new Cost(value, Currency.RUPEE);
+    }
+
+    private void calculateDiscount(Cost actualCost, Offer appliedOffer) {
         if(appliedOffer.isApplicableFor(new DistanceAndWeightCriteriaInput(distanceToDestination, weight))) {
             discount = new Cost(actualCost.getValue() * (appliedOffer.getDiscountPercentage() / 100), Currency.RUPEE);
         } else {

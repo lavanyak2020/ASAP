@@ -7,26 +7,33 @@ import com.ee.asap.domain.model.Package;
 import com.ee.asap.dto.PackageDto;
 import com.ee.asap.exception.OfferNotFoundException;
 
+import static com.ee.asap.service.PackageMapper.toDomainEntity;
+
 public class PackageService {
-    public final Cost baseDeliveryCost;
+    public Cost baseDeliveryCost;
     public final PackageRepository packageRepository;
     public final OfferService offerService;
 
-    public PackageService(Cost baseDeliveryCost, PackageRepository packageRepository, OfferService offerService) {
-        this.baseDeliveryCost = baseDeliveryCost;
+    public PackageService(PackageRepository packageRepository, OfferService offerService) {
         this.packageRepository = packageRepository;
         this.offerService = offerService;
     }
 
-    public Package addPackage(PackageDto receivedPackage) throws OfferNotFoundException {
+    public Package addPackage(PackageDto receivedPackage) {
         Package aPackage = toDomainEntity(receivedPackage);
-        aPackage.calculateTotalCostWith(baseDeliveryCost);
+        try {
+            Offer appliedOffer = offerService.getById(receivedPackage.getOfferId());
+            aPackage.calculateTotalCostWith(baseDeliveryCost, appliedOffer);
+        } catch (OfferNotFoundException e) {
+            System.out.println(e.getMessage());
+            aPackage.calculateTotalCostWith(baseDeliveryCost);
+        }
         packageRepository.add(aPackage);
         return aPackage;
     }
 
-    private Package toDomainEntity(PackageDto receivedPackage) throws OfferNotFoundException {
-        Offer offer = offerService.getById(receivedPackage.getOfferId());
-        return new Package("PKG_1", receivedPackage.getWeight(), receivedPackage.getDistanceToDestination(), offer);
+    public void setBaseDeliveryCost(Cost baseDeliveryCost) {
+        this.baseDeliveryCost = baseDeliveryCost;
     }
 }
+

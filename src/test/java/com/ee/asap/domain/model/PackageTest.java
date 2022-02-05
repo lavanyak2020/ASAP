@@ -20,9 +20,9 @@ class PackageTest {
         when(offer.isApplicableFor(Mockito.any())).thenReturn(false);
         Weight packageWeight = new Weight(10, WeightUnit.KG);
         Distance distanceToDestination = new Distance(50, DistanceUnit.KM);
-        Package receivedPackage = new Package("PKG1", packageWeight, distanceToDestination, offer);
+        Package receivedPackage = new Package("PKG1", packageWeight, distanceToDestination);
 
-        receivedPackage.calculateTotalCostWith(new Cost(100, Currency.RUPEE));
+        receivedPackage.calculateTotalCostWith(new Cost(100, Currency.RUPEE), offer);
 
         Cost zeroRupees = new Cost(0, Currency.RUPEE);
         assertThat(receivedPackage.getDiscount(), is(equalTo(zeroRupees)));
@@ -35,13 +35,25 @@ class PackageTest {
         when(offer.getDiscountPercentage()).thenReturn(Double.valueOf(5));
         Weight packageWeight = new Weight(10, WeightUnit.KG);
         Distance distanceToDestination = new Distance(50, DistanceUnit.KM);
-        Package receivedPackage = new Package("PKG1", packageWeight, distanceToDestination, offer);
+        Package receivedPackage = new Package("PKG1", packageWeight, distanceToDestination);
 
-        receivedPackage.calculateTotalCostWith(new Cost(100, Currency.RUPEE));
+        receivedPackage.calculateTotalCostWith(new Cost(100, Currency.RUPEE), offer);
 
         Cost twentyTwoAndHalfRupees = new Cost(22.5, Currency.RUPEE);
         Cost fourHundredTwentySevenAndHalfRupees = new Cost(427.5, Currency.RUPEE);
         assertThat(receivedPackage.getDiscount(), is(equalTo(twentyTwoAndHalfRupees)));
         assertThat(receivedPackage.getTotalCost(), is(equalTo(fourHundredTwentySevenAndHalfRupees)));
+    }
+
+    @Test
+    void shouldDiscountBe0IfNoOfferAppliedForGivenPackage() {
+        Weight packageWeight = new Weight(10, WeightUnit.KG);
+        Distance distanceToDestination = new Distance(50, DistanceUnit.KM);
+        Package receivedPackage = new Package("PKG1", packageWeight, distanceToDestination);
+
+        receivedPackage.calculateTotalCostWith(new Cost(100, Currency.RUPEE));
+
+        Cost zeroRupees = new Cost(0, Currency.RUPEE);
+        assertThat(receivedPackage.getDiscount(), is(equalTo(zeroRupees)));
     }
 }

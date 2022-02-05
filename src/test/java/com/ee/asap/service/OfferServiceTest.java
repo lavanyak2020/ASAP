@@ -32,12 +32,12 @@ class OfferServiceTest {
     void shouldReturnOfferEntityOfGivenId() throws OfferNotFoundException {
         String testOfferId = "test-offer-id";
         DistanceAndWeightCriteria criteria = DistanceAndWeightCriteria.builder()
-                                                                       .minDistance(new Distance(1, DistanceUnit.KM))
-                                                                       .maxDistance(new Distance(199, DistanceUnit.KM))
-                                                                       .minWeight(new Weight(70, WeightUnit.KG))
-                                                                       .maxWeight(new Weight(200, WeightUnit.KG))
-                                                                       .build();
-        Offer testOffer = Offer.builder().id(testOfferId).discountPercentage(10).criteria(criteria).build();
+                                                                      .minDistance(new Distance(1, DistanceUnit.KM))
+                                                                      .maxDistance(new Distance(199, DistanceUnit.KM))
+                                                                      .minWeight(new Weight(70, WeightUnit.KG))
+                                                                      .maxWeight(new Weight(200, WeightUnit.KG))
+                                                                      .build();
+        Offer testOffer = Offer.builder().code(testOfferId).discountPercentage(10).criteria(criteria).build();
         when(offerRepository.findById(testOfferId)).thenReturn(testOffer);
 
         Offer actualOffer = offerService.getById(testOfferId);

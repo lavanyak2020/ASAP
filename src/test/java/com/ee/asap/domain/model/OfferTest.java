@@ -25,7 +25,7 @@ class OfferTest {
     @BeforeEach
     public void setUp() {
         criteria = mock(DistanceAndWeightCriteria.class);
-        offer = Offer.builder().id("OFFER_1")
+        offer = Offer.builder().code("OFFER_1")
                      .discountPercentage(10)
                      .criteria(criteria)
                      .build();
@@ -51,11 +51,11 @@ class OfferTest {
 
     @Test
     void shouldEquateTwoSameOffersByCriteriaAndDiscount() {
-        Offer offer1 = Offer.builder().id("OFFER_1")
-                             .discountPercentage(10)
-                             .criteria(criteria)
-                             .build();
-        Offer offer2 = Offer.builder().id("OFFER_2")
+        Offer offer1 = Offer.builder().code("OFFER_1")
+                            .discountPercentage(10)
+                            .criteria(criteria)
+                            .build();
+        Offer offer2 = Offer.builder().code("OFFER_2")
                             .discountPercentage(10)
                             .criteria(criteria)
                             .build();

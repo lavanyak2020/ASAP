@@ -1,4 +1,4 @@
-package com.ee.asap.service;
+package com.ee.asap;
 
 import com.ee.asap.datalayer.OfferRepository;
 import com.ee.asap.datalayer.PackageRepository;
@@ -10,7 +10,8 @@ import com.ee.asap.domain.model.Distance;
 import com.ee.asap.domain.model.Package;
 import com.ee.asap.domain.model.Weight;
 import com.ee.asap.dto.PackageDto;
-import com.ee.asap.exception.OfferNotFoundException;
+import com.ee.asap.service.OfferService;
+import com.ee.asap.service.PackageService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,11 +28,12 @@ class ASAPIntegrationTest {
         PackageRepository packageRepository = new PackageRepository();
         OfferService offerService = new OfferService(offerRepository);
         Cost baseDeliveryCost = new Cost(100, Currency.RUPEE);
-        packageService = new PackageService(baseDeliveryCost, packageRepository, offerService);
+        packageService = new PackageService(packageRepository, offerService);
+        packageService.setBaseDeliveryCost(baseDeliveryCost);
     }
 
     @Test
-    void shouldReturnDiscount0IfAppliedOfferIsInvalid() throws OfferNotFoundException {
+    void shouldReturnDiscount0IfAppliedOfferIsInvalid() {
         String invalidOfferId = "OFR001";
         PackageDto packageDto = new PackageDto("PKG1", new Weight(5, WeightUnit.KG), new Distance(5, DistanceUnit.KM), invalidOfferId);
 
@@ -44,7 +46,7 @@ class ASAPIntegrationTest {
     }
 
     @Test
-    void shouldTotalCostBe275() throws OfferNotFoundException {
+    void shouldTotalCostBe275() {
         String invalidOfferId = "OFR002";
         PackageDto packageDto = new PackageDto("PKG1", new Weight(15, WeightUnit.KG), new Distance(5, DistanceUnit.KM), invalidOfferId);
 
@@ -57,7 +59,7 @@ class ASAPIntegrationTest {
     }
 
     @Test
-    void shouldTotalCostBe665AndDiscountBe35() throws OfferNotFoundException {
+    void shouldTotalCostBe665AndDiscountBe35() {
         String offer3 = "OFR003";
         PackageDto packageDto = new PackageDto("PKG1", new Weight(10, WeightUnit.KG), new Distance(100, DistanceUnit.KM), offer3);
 
@@ -67,5 +69,18 @@ class ASAPIntegrationTest {
         Cost sixHundredAndSixtyFiveRupees = new Cost(665, Currency.RUPEE);
         assertThat(aPackage.getDiscount(), is(equalTo(thirtyFiveRupees)));
         assertThat(aPackage.getTotalCost(), is(equalTo(sixHundredAndSixtyFiveRupees)));
+    }
+
+    @Test
+    void shouldDiscountBe0IfAppliedOfferNotFound() {
+        String offer3 = "OFR004";
+        PackageDto packageDto = new PackageDto("PKG1", new Weight(10, WeightUnit.KG), new Distance(100, DistanceUnit.KM), offer3);
+
+        Package aPackage = packageService.addPackage(packageDto);
+
+        Cost zeroRupees = new Cost(0, Currency.RUPEE);
+        Cost sevenHundredRupees = new Cost(700, Currency.RUPEE);
+        assertThat(aPackage.getDiscount(), is(equalTo(zeroRupees)));
+        assertThat(aPackage.getTotalCost(), is(equalTo(sevenHundredRupees)));
     }
 }

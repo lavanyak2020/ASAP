@@ -12,7 +12,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 public class Offer {
-    private String id;
+    private String code;
     private double discountPercentage;
     private Criteria criteria;
 
@@ -30,6 +30,6 @@ public class Offer {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, discountPercentage, criteria);
+        return Objects.hash(code, discountPercentage, criteria);
     }
 }

@@ -20,7 +20,7 @@ public class OfferRepository {
                                                                        .minWeight(new Weight(70, WeightUnit.KG))
                                                                        .maxWeight(new Weight(200, WeightUnit.KG))
                                                                        .build();
-        Offer ofr001 = Offer.builder().id("OFR001").discountPercentage(10).criteria(criteria1).build();
+        Offer ofr001 = Offer.builder().code("OFR001").discountPercentage(10).criteria(criteria1).build();
 
         DistanceAndWeightCriteria criteria2 = DistanceAndWeightCriteria.builder()
                                                                        .minDistance(new Distance(50, DistanceUnit.KM))
@@ -28,7 +28,7 @@ public class OfferRepository {
                                                                        .minWeight(new Weight(100, WeightUnit.KG))
                                                                        .maxWeight(new Weight(250, WeightUnit.KG))
                                                                        .build();
-        Offer ofr002 = Offer.builder().id("OFR002").discountPercentage(7).criteria(criteria2).build();
+        Offer ofr002 = Offer.builder().code("OFR002").discountPercentage(7).criteria(criteria2).build();
 
         DistanceAndWeightCriteria criteria3 = DistanceAndWeightCriteria.builder()
                                                                        .minDistance(new Distance(50, DistanceUnit.KM))
@@ -36,9 +36,9 @@ public class OfferRepository {
                                                                        .minWeight(new Weight(10, WeightUnit.KG))
                                                                        .maxWeight(new Weight(150, WeightUnit.KG))
                                                                        .build();
-        Offer ofr003 = Offer.builder().id("OFR003").discountPercentage(5).criteria(criteria3).build();
+        Offer ofr003 = Offer.builder().code("OFR003").discountPercentage(5).criteria(criteria3).build();
 
-        offers = Map.of(ofr001.getId(), ofr001, ofr002.getId(), ofr002, ofr003.getId(), ofr003);
+        offers = Map.of(ofr001.getCode(), ofr001, ofr002.getCode(), ofr002, ofr003.getCode(), ofr003);
     }
 
     public Offer findById(String id) throws OfferNotFoundException {

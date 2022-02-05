@@ -16,8 +16,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -32,7 +32,8 @@ class PackageServiceTest {
     void setUp() {
         packageRepository = mock(PackageRepository.class);
         offerService = mock(OfferService.class);
-        packageService = new PackageService(new Cost(100, Currency.RUPEE), packageRepository, offerService);
+        packageService = new PackageService(packageRepository, offerService);
+        packageService.setBaseDeliveryCost(new Cost(100, Currency.RUPEE));
     }
 
     @Test
@@ -45,7 +46,7 @@ class PackageServiceTest {
                                                                       .minWeight(new Weight(70, WeightUnit.KG))
                                                                       .maxWeight(new Weight(200, WeightUnit.KG))
                                                                       .build();
-        Offer testOffer = Offer.builder().id(offerId).discountPercentage(10).criteria(criteria).build();
+        Offer testOffer = Offer.builder().code(offerId).discountPercentage(10).criteria(criteria).build();
         when(offerService.getById(offerId)).thenReturn(testOffer);
 
         Package packageEntity = packageService.addPackage(aPackage);
@@ -56,11 +57,11 @@ class PackageServiceTest {
     }
 
     @Test
-    void shouldThrowExceptionIfOfferNotFound() throws OfferNotFoundException {
+    void shouldNotThrowExceptionIfOfferNotFound() throws OfferNotFoundException {
         String offerId = "offer-id";
         PackageDto aPackage = new PackageDto("PKG1", new Weight(10, WeightUnit.KG), new Distance(50, DistanceUnit.KM), offerId);
         when(offerService.getById(offerId)).thenThrow(new OfferNotFoundException("Offer not found"));
 
-        assertThrows(OfferNotFoundException.class, () -> packageService.addPackage(aPackage));
+        assertDoesNotThrow(() -> packageService.addPackage(aPackage));
     }
 }
