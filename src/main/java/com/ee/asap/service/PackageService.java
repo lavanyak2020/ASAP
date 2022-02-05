@@ -7,7 +7,7 @@ import com.ee.asap.domain.model.Package;
 import com.ee.asap.dto.PackageDto;
 import com.ee.asap.exception.OfferNotFoundException;
 
-import static com.ee.asap.service.PackageMapper.toDomainEntity;
+import static com.ee.asap.mapper.PackageMapper.toDomainEntity;
 
 public class PackageService {
     public Cost baseDeliveryCost;

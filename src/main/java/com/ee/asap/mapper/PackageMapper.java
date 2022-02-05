@@ -1,4 +1,4 @@
-package com.ee.asap.service;
+package com.ee.asap.mapper;
 
 import com.ee.asap.domain.model.Package;
 import com.ee.asap.dto.PackageDto;
