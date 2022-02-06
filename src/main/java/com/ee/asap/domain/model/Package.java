@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 import static com.ee.asap.domain.constants.CostConstants.DISTANCE_COST_FACTOR;
 import static com.ee.asap.domain.constants.CostConstants.WEIGHT_COST_FACTOR;
-import static com.ee.asap.domain.constants.enums.WeightUnit.*;
+import static com.ee.asap.domain.constants.enums.WeightUnit.KG;
 
 @RequiredArgsConstructor
 @Getter
@@ -58,17 +58,17 @@ public class Package {
         estimatedTime = currentTime.plus(new Time((distanceToDestination.getValue() / speed.getValue()), TimeUnit.HOURS));
     }
 
-    public static List<Package> getEfficientComboOfSize(List<Package> packages, Weight maxWeight, Speed speed, int size) {
+    public static List<Package> getEfficientComboOfSize(List<Package> packages, Weight maxWeight, int size) {
         List<List<Package>> combos = generatePackagesOfMaxWeight(packages, maxWeight, size);
 
-        return extractEfficientPackageCombo(combos);
+        return packageCombinationToShip(combos);
     }
 
     public static List<Package> packagesToEstimate(List<Package> packages) {
         return packages.stream().filter(aPackage -> aPackage.getEstimatedTime() == null).collect(Collectors.toList());
     }
 
-    private static List<Package> extractEfficientPackageCombo(List<List<Package>> combos) {
+    private static List<Package> packageCombinationToShip(List<List<Package>> combos) {
         if (combos.size() == 0) {
             return null;
         }
@@ -77,11 +77,11 @@ public class Package {
         for (List<Package> combo : combos) {
             Weight currentComboTotalWeight = getTotalWeightOf(combo);
             Weight bestComboTotalWeight = getTotalWeightOf(bestCombo);
-            double currentComboDistanceOfLongestDestination = getLongestDistance(combo);
-            double bestComboDistanceOfLongestDestination = getLongestDistance(bestCombo);
+            Distance currentComboDistanceOfLongestDestination = getShipmentDistanceFor(combo);
+            Distance bestComboDistanceOfLongestDestination = getShipmentDistanceFor(bestCombo);
             if (currentComboTotalWeight.isGreaterThan(bestComboTotalWeight)) {
                 bestCombo = combo;
-            } else if (currentComboTotalWeight == bestComboTotalWeight && currentComboDistanceOfLongestDestination < bestComboDistanceOfLongestDestination) {
+            } else if (currentComboTotalWeight == bestComboTotalWeight && currentComboDistanceOfLongestDestination.isLessThan(bestComboDistanceOfLongestDestination)) {
                 bestCombo = combo;
             }
         }

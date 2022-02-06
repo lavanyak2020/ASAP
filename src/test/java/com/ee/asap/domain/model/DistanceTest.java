@@ -67,6 +67,34 @@ class DistanceTest {
         }
     }
 
+    @Nested
+    class LessThanTest {
+
+        @Test
+        void shouldReturnTrueIfDistance1IsLessThanDistance2() {
+            Distance distance1 = new Distance(10, DistanceUnit.KM);
+            Distance distance2 = new Distance(20, DistanceUnit.KM);
+
+            assertTrue(distance1.isLessThan(distance2));
+        }
+
+        @Test
+        void shouldReturnFalseIfDistance1IsEqualToDistance2() {
+            Distance distance1 = new Distance(10, DistanceUnit.KM);
+            Distance distance2 = new Distance(10, DistanceUnit.KM);
+
+            assertFalse(distance1.isLessThan(distance2));
+        }
+
+        @Test
+        void shouldReturnFalseIfDistance1IsGreaterThanDistance2() {
+            Distance distance1 = new Distance(20, DistanceUnit.KM);
+            Distance distance2 = new Distance(10, DistanceUnit.KM);
+
+            assertFalse(distance1.isLessThan(distance2));
+        }
+    }
+
     @Test
     void shouldEquateTwoSameDistanceByValueAndUnit() {
         Distance distance1 = new Distance(10, DistanceUnit.KM);

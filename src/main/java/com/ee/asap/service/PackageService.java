@@ -54,7 +54,7 @@ public class PackageService {
 
         while (packagesToEstimate.size() > 0) {
             for (int size = packagesToEstimate.size(); size > 0; size--) {
-                List<Package> efficientPackageCombo = getEfficientComboOfSize(packagesToEstimate, maxWeight, speed, size);
+                List<Package> efficientPackageCombo = getEfficientComboOfSize(packagesToEstimate, maxWeight, size);
                 if (efficientPackageCombo != null) {
                     Vehicle vehicle = vehicleService.getAnAvailableVehicle();
                     Distance longestDistance = getShipmentDistanceFor(efficientPackageCombo);
