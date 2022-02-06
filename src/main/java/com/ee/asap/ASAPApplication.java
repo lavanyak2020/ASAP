@@ -18,7 +18,7 @@ import com.ee.asap.dto.PackageDto;
 import com.ee.asap.service.OfferService;
 import com.ee.asap.service.PackageService;
 import com.ee.asap.service.VehicleService;
-import com.ee.asap.exception.ZeroVehiclesException;
+import com.ee.asap.exception.NoVehiclesException;
 
 import java.util.List;
 import java.util.Scanner;
@@ -31,7 +31,7 @@ public class ASAPApplication {
         setUp();
     }
 
-    public static void main(String[] args) throws ZeroVehiclesException {
+    public static void main(String[] args) throws NoVehiclesException {
         ASAPApplication app = new ASAPApplication();
         Scanner scanner = new Scanner(System.in);
 
