@@ -1,6 +1,7 @@
 package com.ee.asap.service;
 
 import com.ee.asap.datalayer.PackageRepository;
+import com.ee.asap.datalayer.VehicleRepository;
 import com.ee.asap.domain.constants.enums.Currency;
 import com.ee.asap.domain.constants.enums.DistanceUnit;
 import com.ee.asap.domain.constants.enums.WeightUnit;
@@ -32,7 +33,7 @@ class PackageServiceTest {
     void setUp() {
         packageRepository = mock(PackageRepository.class);
         offerService = mock(OfferService.class);
-        packageService = new PackageService(packageRepository, offerService);
+        packageService = new PackageService(packageRepository, offerService, new VehicleService(new VehicleRepository()));
         packageService.setBaseDeliveryCost(new Cost(100, Currency.RUPEE));
     }
 

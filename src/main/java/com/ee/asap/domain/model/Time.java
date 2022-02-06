@@ -2,11 +2,13 @@ package com.ee.asap.domain.model;
 
 import com.ee.asap.domain.constants.enums.TimeUnit;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.Objects;
 
 
 @AllArgsConstructor
+@Getter
 public class Time {
     private final double value;
     private final TimeUnit unit;

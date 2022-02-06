@@ -16,7 +16,7 @@ public class PackageRepository {
         packages.add(aPackage);
     }
 
-    public List<Package> getAll() {
+    public List<Package> findAll() {
         return packages;
     }
 }

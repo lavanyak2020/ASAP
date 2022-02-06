@@ -2,10 +2,12 @@ package com.ee.asap.domain.model;
 
 import com.ee.asap.domain.constants.enums.SpeedUnit;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.Objects;
 
 @AllArgsConstructor
+@Getter
 public class Speed {
     private final double value;
     private final SpeedUnit speedUnit;

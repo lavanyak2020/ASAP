@@ -2,27 +2,36 @@ package com.ee.asap;
 
 import com.ee.asap.datalayer.OfferRepository;
 import com.ee.asap.datalayer.PackageRepository;
+import com.ee.asap.datalayer.VehicleRepository;
 import com.ee.asap.domain.constants.enums.Currency;
 import com.ee.asap.domain.constants.enums.DistanceUnit;
+import com.ee.asap.domain.constants.enums.SpeedUnit;
 import com.ee.asap.domain.constants.enums.WeightUnit;
 import com.ee.asap.domain.model.Cost;
 import com.ee.asap.domain.model.Distance;
 import com.ee.asap.domain.model.Package;
+import com.ee.asap.domain.model.Speed;
+import com.ee.asap.domain.model.Time;
+import com.ee.asap.domain.model.Vehicle;
 import com.ee.asap.domain.model.Weight;
 import com.ee.asap.dto.PackageDto;
 import com.ee.asap.service.OfferService;
 import com.ee.asap.service.PackageService;
+import com.ee.asap.service.VehicleService;
+import com.ee.asap.service.ZeroVehiclesException;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class ASAPApplication {
     private PackageService packageService;
+    private VehicleService vehicleService;
 
     public ASAPApplication() {
         setUp();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ZeroVehiclesException {
         ASAPApplication app = new ASAPApplication();
         Scanner scanner = new Scanner(System.in);
 
@@ -31,20 +40,37 @@ public class ASAPApplication {
         Cost baseDeliveryCost = new Cost(baseDeliveryCostValue, Currency.RUPEE);
         app.packageService.setBaseDeliveryCost(baseDeliveryCost);
 
+        System.out.print("Enter No. of vehicles: ");
+        int noOfVehicles = scanner.nextInt();
+        System.out.print("Enter Max Speed: ");
+        double maxSpeedValue = scanner.nextDouble();
+        System.out.print("Enter Max Carriable weight: ");
+        double maxCarriableWeight = scanner.nextDouble();
+        Weight maxWeight = new Weight(maxCarriableWeight, WeightUnit.KG);
+        Speed maxSpeed = new Speed(maxSpeedValue, SpeedUnit.KM_PER_HOUR);
+
+        for (int i = 0; i < noOfVehicles; i++) {
+            app.vehicleService.add(new Vehicle("V_"+i, maxWeight, maxSpeed));
+        }
+
         System.out.print("No. of packages: ");
         int noOfPackages = scanner.nextInt();
 
-        for(int i = 0; i < noOfPackages; i++) {
+        for (int i = 0; i < noOfPackages; i++) {
             PackageDto packageDto = inputPackageDetails(scanner);
             Package aPackage = app.packageService.addPackage(packageDto);
-            printOutput(aPackage);
         }
+        app.packageService.calculateEstimationTimes(maxWeight, maxSpeed);
+
+        List<Package> allPackages = app.packageService.getAllPackages();
+        allPackages.forEach(ASAPApplication::printOutput);
     }
 
     private static void printOutput(Package aPackage) {
         Cost totalCost = aPackage.getTotalCost();
         Cost discount = aPackage.getDiscount();
-        System.out.printf("Total cost: %s %s Discount: %s %s", totalCost.getValue(), totalCost.getCurrency().name, discount.getValue(), discount.getCurrency().name);
+        Time time = aPackage.getEstimatedTime();
+        System.out.printf("PackageID: %s Discount: %s %s Total cost: %s %s Estimated delivery time(in hours): %s %s", aPackage.getId(), discount.getValue(), discount.getCurrency().name, totalCost.getValue(), totalCost.getCurrency().name, time.getValue(), time.getUnit().name);
         System.out.println();
     }
 
@@ -64,6 +90,7 @@ public class ASAPApplication {
         OfferRepository offerRepository = new OfferRepository();
         PackageRepository packageRepository = new PackageRepository();
         OfferService offerService = new OfferService(offerRepository);
-        packageService = new PackageService(packageRepository, offerService);
+        vehicleService = new VehicleService(new VehicleRepository());
+        packageService = new PackageService(packageRepository, offerService, vehicleService);
     }
 }

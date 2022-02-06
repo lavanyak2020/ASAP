@@ -24,4 +24,9 @@ public class Vehicle {
     public void addAvailableTimeBy(Time time) {
         availableAfter = availableAfter.plus(time);
     }
+
+    public void updateAvailableTime(Distance distance) {
+        Time turnAroundTime = new Time(2 * (distance.getValue() / maxSpeed.getValue()), TimeUnit.HOURS);
+        addAvailableTimeBy(turnAroundTime);
+    }
 }
