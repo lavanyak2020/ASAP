@@ -17,7 +17,7 @@ import com.ee.asap.dto.PackageDto;
 import com.ee.asap.service.OfferService;
 import com.ee.asap.service.PackageService;
 import com.ee.asap.service.VehicleService;
-import com.ee.asap.service.ZeroVehiclesException;
+import com.ee.asap.exception.ZeroVehiclesException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

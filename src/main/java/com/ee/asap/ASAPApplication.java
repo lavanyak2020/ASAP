@@ -18,7 +18,7 @@ import com.ee.asap.dto.PackageDto;
 import com.ee.asap.service.OfferService;
 import com.ee.asap.service.PackageService;
 import com.ee.asap.service.VehicleService;
-import com.ee.asap.service.ZeroVehiclesException;
+import com.ee.asap.exception.ZeroVehiclesException;
 
 import java.util.List;
 import java.util.Scanner;
@@ -58,7 +58,7 @@ public class ASAPApplication {
 
         for (int i = 0; i < noOfPackages; i++) {
             PackageDto packageDto = inputPackageDetails(scanner);
-            Package aPackage = app.packageService.addPackage(packageDto);
+            app.packageService.addPackage(packageDto);
         }
         app.packageService.calculateEstimationTimes(maxWeight, maxSpeed);
 

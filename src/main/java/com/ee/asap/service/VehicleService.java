@@ -2,9 +2,9 @@ package com.ee.asap.service;
 
 import com.ee.asap.datalayer.VehicleRepository;
 import com.ee.asap.domain.model.Vehicle;
+import com.ee.asap.exception.ZeroVehiclesException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 

@@ -8,6 +8,7 @@ import com.ee.asap.domain.model.Speed;
 import com.ee.asap.domain.model.Time;
 import com.ee.asap.domain.model.Vehicle;
 import com.ee.asap.domain.model.Weight;
+import com.ee.asap.exception.ZeroVehiclesException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

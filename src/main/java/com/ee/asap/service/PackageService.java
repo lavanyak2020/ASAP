@@ -10,6 +10,7 @@ import com.ee.asap.domain.model.Vehicle;
 import com.ee.asap.domain.model.Weight;
 import com.ee.asap.dto.PackageDto;
 import com.ee.asap.exception.OfferNotFoundException;
+import com.ee.asap.exception.ZeroVehiclesException;
 
 import java.util.List;
 
