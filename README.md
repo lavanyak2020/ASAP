@@ -2,12 +2,12 @@
 ASAP is a courier service system. Currently, offer criteria is using weight and distance criteria. This ASAP system provides extensibility to add our own offer criteria as well.
 This provides extensibility to create new offers as well.
 
-###Application functionalities:
+### Application functionalities:
 
 - Calculate total cost of a package and discount if any offerCode applied
 - Calculate estimated time of delivery of a package
 
-###Available Offer codes:
+### Available Offer codes:
 Currently, there are only 3 offer codes available. If applied offer code is other than these 3 then discount will be 0.
 - `OFR001`
 - `OFR002`
