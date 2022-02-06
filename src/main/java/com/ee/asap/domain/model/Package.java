@@ -4,6 +4,7 @@ import com.ee.asap.domain.constants.enums.Currency;
 import com.ee.asap.domain.constants.enums.DistanceUnit;
 import com.ee.asap.domain.constants.enums.TimeUnit;
 import com.ee.asap.domain.model.criteria.DistanceAndWeightCriteriaInput;
+import com.ee.asap.service.Utils;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 import static com.ee.asap.domain.constants.CostConstants.DISTANCE_COST_FACTOR;
 import static com.ee.asap.domain.constants.CostConstants.WEIGHT_COST_FACTOR;
+import static com.ee.asap.domain.constants.enums.WeightUnit.*;
 
 @RequiredArgsConstructor
 @Getter
@@ -57,7 +59,7 @@ public class Package {
     }
 
     public static List<Package> getEfficientComboOfSize(List<Package> packages, Weight maxWeight, Speed speed, int size) {
-        List<List<Package>> combos = generatePackageCombosWhoseWeightIsNotMoreThanMaxVehicleCapacityOfSize(packages, maxWeight, size);
+        List<List<Package>> combos = generatePackagesOfMaxWeight(packages, maxWeight, size);
 
         return extractEfficientPackageCombo(combos);
     }
@@ -73,11 +75,11 @@ public class Package {
         List<Package> bestCombo = combos.get(0);
 
         for (List<Package> combo : combos) {
-            double currentComboTotalWeight = getTotalWeightOf(combo);
-            double bestComboTotalWeight = getTotalWeightOf(bestCombo);
+            Weight currentComboTotalWeight = getTotalWeightOf(combo);
+            Weight bestComboTotalWeight = getTotalWeightOf(bestCombo);
             double currentComboDistanceOfLongestDestination = getLongestDistance(combo);
             double bestComboDistanceOfLongestDestination = getLongestDistance(bestCombo);
-            if (currentComboTotalWeight > bestComboTotalWeight) {
+            if (currentComboTotalWeight.isGreaterThan(bestComboTotalWeight)) {
                 bestCombo = combo;
             } else if (currentComboTotalWeight == bestComboTotalWeight && currentComboDistanceOfLongestDestination < bestComboDistanceOfLongestDestination) {
                 bestCombo = combo;
@@ -95,45 +97,25 @@ public class Package {
         return new Distance(getLongestDistance(packages), DistanceUnit.KM);
     }
 
-    private static double getTotalWeightOf(List<Package> bestCombo) {
-        return bestCombo.stream().mapToDouble(aPackage -> aPackage.getWeight().getValue()).sum();
+    private static Weight getTotalWeightOf(List<Package> packages) {
+        double sum = packages.stream().mapToDouble(aPackage -> aPackage.getWeight().getValue()).sum();
+        return new Weight(sum, KG);
     }
 
-    private static List<List<Package>> generatePackageCombosWhoseWeightIsNotMoreThanMaxVehicleCapacityOfSize(List<Package> packages, Weight maxWeight, int comboSize) {
-        List<int[]> nCrIndices = generate(packages.size(), comboSize);
-        List<List<Package>> combos = nCrIndices.stream().map(combination -> {
+    private static List<List<Package>> generatePackagesOfMaxWeight(List<Package> packages, Weight maxWeight, int comboSize) {
+        List<int[]> combinationsIndices = Utils.generateCombinationsOf(packages.size(), comboSize);
+        List<List<Package>> combos = generatePackageCombinations(packages, combinationsIndices);
+
+        return combos.stream().filter(combination -> getTotalWeightOf(combination).isLessOrEqual(maxWeight)).collect(Collectors.toList());
+    }
+
+    private static List<List<Package>> generatePackageCombinations(List<Package> packages, List<int[]> combinationsIndices) {
+        return combinationsIndices.stream().map(combination -> {
             List<Package> packagesCombo = new ArrayList<>();
             for (int index : combination) {
                 packagesCombo.add(packages.get(index));
             }
             return packagesCombo;
         }).collect(Collectors.toList());
-
-        List<List<Package>> validCombos = combos.stream().filter(combination -> {
-            double weightSum = 0;
-            for (Package aPackage : combination) {
-                weightSum += aPackage.getWeight().getValue();
-            }
-            return !(weightSum > maxWeight.getValue());
-        }).collect(Collectors.toList());
-
-        return validCombos;
-    }
-
-    private static void helper(List<int[]> combinations, int[] data, int start, int end, int index) {
-        if (index == data.length) {
-            int[] combination = data.clone();
-            combinations.add(combination);
-        } else if (start <= end) {
-            data[index] = start;
-            helper(combinations, data, start + 1, end, index + 1);
-            helper(combinations, data, start + 1, end, index);
-        }
-    }
-
-    public static List<int[]> generate(int n, int r) {
-        List<int[]> combinations = new ArrayList<>();
-        helper(combinations, new int[r], 0, n - 1, 0);
-        return combinations;
     }
 }

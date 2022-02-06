@@ -5,8 +5,6 @@ import com.ee.asap.datalayer.PackageRepository;
 import com.ee.asap.datalayer.VehicleRepository;
 import com.ee.asap.domain.constants.enums.Currency;
 import com.ee.asap.domain.constants.enums.DistanceUnit;
-import com.ee.asap.domain.constants.enums.SpeedUnit;
-import com.ee.asap.domain.constants.enums.WeightUnit;
 import com.ee.asap.domain.model.Cost;
 import com.ee.asap.domain.model.Distance;
 import com.ee.asap.domain.model.Package;
@@ -18,10 +16,13 @@ import com.ee.asap.dto.PackageDto;
 import com.ee.asap.service.OfferService;
 import com.ee.asap.service.PackageService;
 import com.ee.asap.service.VehicleService;
-import com.ee.asap.exception.NoVehiclesException;
+import com.ee.asap.exception.NoVehiclesFoundException;
 
 import java.util.List;
 import java.util.Scanner;
+
+import static com.ee.asap.domain.constants.enums.SpeedUnit.KM_PER_HOUR;
+import static com.ee.asap.domain.constants.enums.WeightUnit.KG;
 
 public class ASAPApplication {
     private PackageService packageService;
@@ -31,7 +32,7 @@ public class ASAPApplication {
         setUp();
     }
 
-    public static void main(String[] args) throws NoVehiclesException {
+    public static void main(String[] args) throws NoVehiclesFoundException {
         ASAPApplication app = new ASAPApplication();
         Scanner scanner = new Scanner(System.in);
 
@@ -46,8 +47,8 @@ public class ASAPApplication {
         double maxSpeedValue = scanner.nextDouble();
         System.out.print("Enter Max Carriable weight: ");
         double maxCarriableWeight = scanner.nextDouble();
-        Weight maxWeight = new Weight(maxCarriableWeight, WeightUnit.KG);
-        Speed maxSpeed = new Speed(maxSpeedValue, SpeedUnit.KM_PER_HOUR);
+        Weight maxWeight = new Weight(maxCarriableWeight, KG);
+        Speed maxSpeed = new Speed(maxSpeedValue, KM_PER_HOUR);
 
         for (int i = 0; i < noOfVehicles; i++) {
             app.vehicleService.add(new Vehicle("V_"+i, maxWeight, maxSpeed));
@@ -60,7 +61,7 @@ public class ASAPApplication {
             PackageDto packageDto = inputPackageDetails(scanner);
             app.packageService.addPackage(packageDto);
         }
-        app.packageService.calculateEstimationTimes(maxWeight, maxSpeed);
+        app.packageService.calculateEstimatedTimes(maxWeight, maxSpeed);
 
         List<Package> allPackages = app.packageService.getAllPackages();
         allPackages.forEach(ASAPApplication::printOutput);
@@ -83,7 +84,7 @@ public class ASAPApplication {
         double distanceValue = scanner.nextDouble();
         System.out.print("offerCode:");
         String offerCode = scanner.next();
-        return new PackageDto(packageId, new Weight(weightValue, WeightUnit.KG), new Distance(distanceValue, DistanceUnit.KM), offerCode);
+        return new PackageDto(packageId, new Weight(weightValue, KG), new Distance(distanceValue, DistanceUnit.KM), offerCode);
     }
 
     private void setUp() {

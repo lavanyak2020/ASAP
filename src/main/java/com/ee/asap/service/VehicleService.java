@@ -2,7 +2,7 @@ package com.ee.asap.service;
 
 import com.ee.asap.datalayer.VehicleRepository;
 import com.ee.asap.domain.model.Vehicle;
-import com.ee.asap.exception.NoVehiclesException;
+import com.ee.asap.exception.NoVehiclesFoundException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -15,10 +15,10 @@ public class VehicleService {
         this.vehicleRepository = vehicleRepository;
     }
 
-    public Vehicle getAnAvailableVehicle() throws NoVehiclesException {
+    public Vehicle getAnAvailableVehicle() throws NoVehiclesFoundException {
         List<Vehicle> vehicles = vehicleRepository.findAll();
         if(vehicles.size() == 0 ) {
-            throw new NoVehiclesException("There no vehicles in the system at the moment");
+            throw new NoVehiclesFoundException("There no vehicles in the system at the moment");
         }
 
         ArrayList<Vehicle> sortedVehicles = new ArrayList<>(vehicles);

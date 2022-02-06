@@ -21,6 +21,10 @@ public class Weight {
         return this.unit.equals(that.unit) && this.value <= that.value;
     }
 
+    public boolean isGreaterThan(Weight that) {
+        return this.unit.equals(that.unit) && this.value > that.value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

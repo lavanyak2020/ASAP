@@ -8,7 +8,7 @@ import com.ee.asap.domain.model.Speed;
 import com.ee.asap.domain.model.Time;
 import com.ee.asap.domain.model.Vehicle;
 import com.ee.asap.domain.model.Weight;
-import com.ee.asap.exception.NoVehiclesException;
+import com.ee.asap.exception.NoVehiclesFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,7 +33,7 @@ class VehicleServiceTest {
     }
 
     @Test
-    void shouldReturnVehicleWhichCanBeAvailableFirst() throws NoVehiclesException {
+    void shouldReturnVehicleWhichCanBeAvailableFirst() throws NoVehiclesFoundException {
         Vehicle vehicle1 = new Vehicle("1", new Weight(200, WeightUnit.KG), new Speed(60, SpeedUnit.KM_PER_HOUR));
         vehicle1.addAvailableTimeBy(new Time(1, TimeUnit.HOURS));
         Vehicle vehicle2 = new Vehicle("2", new Weight(200, WeightUnit.KG), new Speed(60, SpeedUnit.KM_PER_HOUR));
@@ -47,7 +47,7 @@ class VehicleServiceTest {
     }
 
     @Test
-    void shouldReturnFirstVehicleWhenMultipleVehiclesAreAvailable() throws NoVehiclesException {
+    void shouldReturnFirstVehicleWhenMultipleVehiclesAreAvailable() throws NoVehiclesFoundException {
         Vehicle vehicle1 = new Vehicle("1", new Weight(200, WeightUnit.KG), new Speed(60, SpeedUnit.KM_PER_HOUR));
         vehicle1.addAvailableTimeBy(new Time(1, TimeUnit.HOURS));
         Vehicle vehicle2 = new Vehicle("2", new Weight(200, WeightUnit.KG), new Speed(60, SpeedUnit.KM_PER_HOUR));
@@ -63,6 +63,6 @@ class VehicleServiceTest {
     void shouldThrowExceptionWhenThereIsZeroVehicles() {
         when(vehicleRepository.findAll()).thenReturn(new ArrayList<>());
 
-        assertThrows(NoVehiclesException.class, vehicleService::getAnAvailableVehicle);
+        assertThrows(NoVehiclesFoundException.class, vehicleService::getAnAvailableVehicle);
     }
 }

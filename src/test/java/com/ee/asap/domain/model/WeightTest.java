@@ -68,6 +68,34 @@ class WeightTest {
         }
     }
 
+    @Nested
+    class GreaterThanTest {
+
+        @Test
+        void shouldReturnTrueIfWeight1IsGreaterThanWeight2() {
+            Weight weight1 = new Weight(20f, WeightUnit.KG);
+            Weight weight2 = new Weight(10f, WeightUnit.KG);
+
+            assertTrue(weight1.isGreaterThan(weight2));
+        }
+
+        @Test
+        void shouldReturnFalseIfWeight1IsEqualToWeight2() {
+            Weight weight1 = new Weight(10f, WeightUnit.KG);
+            Weight weight2 = new Weight(10f, WeightUnit.KG);
+
+            assertFalse(weight1.isGreaterThan(weight2));
+        }
+
+        @Test
+        void shouldReturnFalseIfWeight1IsLessThanWeight2() {
+            Weight weight1 = new Weight(10f, WeightUnit.KG);
+            Weight weight2 = new Weight(20f, WeightUnit.KG);
+
+            assertFalse(weight1.isGreaterThan(weight2));
+        }
+    }
+
     @Test
     void shouldEquateTwoSameWeightByValueAndUnit() {
         Weight weight1 = new Weight(10, WeightUnit.KG);

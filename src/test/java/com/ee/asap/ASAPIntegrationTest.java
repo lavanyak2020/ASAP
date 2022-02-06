@@ -17,7 +17,7 @@ import com.ee.asap.dto.PackageDto;
 import com.ee.asap.service.OfferService;
 import com.ee.asap.service.PackageService;
 import com.ee.asap.service.VehicleService;
-import com.ee.asap.exception.NoVehiclesException;
+import com.ee.asap.exception.NoVehiclesFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -97,7 +97,7 @@ class ASAPIntegrationTest {
     }
 
     @Test
-    void shouldEstimateCostOfEachPackage() throws NoVehiclesException {
+    void shouldEstimateCostOfEachPackage() throws NoVehiclesFoundException {
         PackageDto packageDto1 = new PackageDto("PKG1", new Weight(50, WeightUnit.KG), new Distance(30, DistanceUnit.KM), "OFR001");
         PackageDto packageDto2 = new PackageDto("PKG2", new Weight(75, WeightUnit.KG), new Distance(125, DistanceUnit.KM), "OFFR0008");
         PackageDto packageDto3 = new PackageDto("PKG3", new Weight(175, WeightUnit.KG), new Distance(100, DistanceUnit.KM), "OFFR003");
@@ -109,7 +109,7 @@ class ASAPIntegrationTest {
         Package aPackage4 = packageService.addPackage(packageDto4);
         Package aPackage5 = packageService.addPackage(packageDto5);
 
-        packageService.calculateEstimationTimes(new Weight(200, WeightUnit.KG), new Speed(70, SpeedUnit.KM_PER_HOUR));
+        packageService.calculateEstimatedTimes(new Weight(200, WeightUnit.KG), new Speed(70, SpeedUnit.KM_PER_HOUR));
 
         assertNotNull(aPackage1.getEstimatedTime());
         assertNotNull(aPackage2.getEstimatedTime());

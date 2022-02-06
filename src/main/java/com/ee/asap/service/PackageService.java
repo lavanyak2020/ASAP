@@ -10,7 +10,7 @@ import com.ee.asap.domain.model.Vehicle;
 import com.ee.asap.domain.model.Weight;
 import com.ee.asap.dto.PackageDto;
 import com.ee.asap.exception.OfferNotFoundException;
-import com.ee.asap.exception.NoVehiclesException;
+import com.ee.asap.exception.NoVehiclesFoundException;
 
 import java.util.List;
 
@@ -48,7 +48,7 @@ public class PackageService {
         this.baseDeliveryCost = baseDeliveryCost;
     }
 
-    public void calculateEstimationTimes(Weight maxWeight, Speed speed) throws NoVehiclesException {
+    public void calculateEstimatedTimes(Weight maxWeight, Speed speed) throws NoVehiclesFoundException {
         List<Package> packages = packageRepository.findAll();
         List<Package> packagesToEstimate = packagesToEstimate(packages);
 
